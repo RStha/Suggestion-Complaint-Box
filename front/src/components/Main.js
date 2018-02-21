@@ -3,7 +3,6 @@ import SideMenuBar from './SideMenuBar'
 import BsFeeds from './BsFeeds'
 
 import axios from 'axios'
-import { deprecate } from 'util';
 class Main extends Component {
     constructor(props) {
         super(props)
@@ -46,7 +45,28 @@ class Main extends Component {
       .then((response) => {
         alert("Suggestion/complaint successfully uploaded");
         console.log('saved successfully')
+        // a = [1,2,3]
+        // b = [...a,4]  => [1,2,3,4]
+        var posts = [...this.state.defaultPosts,response.data];
+        if(this.state.temp){
+        this.setState({
+          defaultPosts:posts
+        },()=>{
+            this.filterByDepartment(this.state.temp)
+        });
+        } else {
+          this.setState({
+            defaultPosts:posts,
+            filteredPost:posts
+          });
+        }
         this.setState({complaintText: '', department: ''});
+        
+        // axios.get('http://localhost:4000/complaints')
+        // .then((posts) => {
+        //   this.setState({defaultPosts: posts, filteredPost: posts})
+        // })
+        // .catch(e => console.log("error", e))
     })
     .catch(err =>{
       console.log(err.message);
@@ -54,6 +74,7 @@ class Main extends Component {
 }
 
 filterByDepartment = (dept) => {
+    this.setState({temp:dept});
     console.log('DEFAULT POST', this.state.defaultPosts);
     console.log("Department Selected", dept)
     if (dept === "dashboard" ){
@@ -82,7 +103,7 @@ filterByDepartment = (dept) => {
             <form onSubmit={this.postComplaint}>
               <div  className="form-group">
                 <label>Select related department</label>
-                <select className="form-control" id="exampleFormControlSelect1" onChange = {(e) => this.setState({department: e.target.value})} required>
+                <select className="form-control" id="exampleFormControlSelect1" value={this.state.department} onChange = {(e) => this.setState({department: e.target.value})} required>
                   <option value="">Choose Department</option>
                   <option value="technology">Technology</option>
                   <option value="techServies">Tech Service</option>
