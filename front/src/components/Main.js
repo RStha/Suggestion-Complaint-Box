@@ -97,7 +97,7 @@ filterByDepartment = (dept) => {
         <div style= {{paddingTop: '5rem'}}>
     
             <div className="row">
-                <div className="col-sm-2"><SideMenuBar departmentSelected = {this.filterByDepartment}/></div>
+                <div className="col-sm-2"><SideMenuBar departmentSelected = {this.filterByDepartment} dept={this.state.temp || "dashboard"}/></div>
                 <div className="col-sm-10">
 
             <form onSubmit={this.postComplaint}>
