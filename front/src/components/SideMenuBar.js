@@ -8,7 +8,8 @@ const SideMenuBar = (props) => {
   }
 
   return(
-    <ul className="nav nav-pills flex-column">
+    <div className="sidebar">
+    <ul className="nav nav-link nav-pills flex-column">
     <li className="nav-item">
       <a className={props.dept === 'dashboard'?"nav-link active pointer":"nav-link pointer"} onClick={() => onDepartmentSelected("dashboard")}>
         <span data-feather="home"></span>
@@ -52,6 +53,7 @@ const SideMenuBar = (props) => {
       </a>
     </li>
   </ul>
+  </div>
 )}
 
 export default SideMenuBar;
