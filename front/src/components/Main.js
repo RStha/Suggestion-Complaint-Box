@@ -150,6 +150,7 @@ filterByDepartment = (dept) => {
               {this.state.filteredPost.map((post, index) => {
                     return <BsFeeds comment = {post.complaint} username = {post.userName} key = {index} id = {post._id} deletePost= {this.deletePost}/>
                 })}
+              {this.state.filteredPost.length === 0 ? "No Complaints" : ""}
             </div>
             </div>
             </div>
