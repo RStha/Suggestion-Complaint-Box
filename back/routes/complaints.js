@@ -3,12 +3,22 @@ var router = express.Router();
 var schema = require('../schema')
 
 router.get('/', function(req, res, next) {
-    schema.Complaint.find((err, data) => {
-        if(err){
-            res.send('error');
-            return;
-        }
-       res.send(data)
+    // schema.Complaint.find((err, data) => {
+    //     if(err){
+    //         res.send('error');
+    //         return;
+    //     }
+    //    res.send(data)
+    // })
+
+    schema.Complaint.find()
+    .sort([['createdDate', -1]])
+    .exec()
+    .then((data) => {
+        res.send(data);
+    })
+    .catch(err => {
+        throw err;
     })
 });
 
@@ -49,7 +59,19 @@ router.get('/:id', function(req, res, next) {
   });
 
   router.delete('/:id', function(req, res, next) {
-    res.send('respond with a resource');
+
+      schema.Complaint.findByIdAndRemove(req.params.id, (err, response) => {
+          if (err) throw err;          
+          schema.Complaint.find()
+          .sort([['createdDate', -1]])
+          .exec()
+          .then((data) => {
+              res.send(data);
+          })
+          .catch(err => {
+              throw err;
+          })
+      })
   });
 
 module.exports = router;

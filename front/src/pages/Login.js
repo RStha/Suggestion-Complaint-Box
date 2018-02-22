@@ -15,7 +15,9 @@ class Login extends Component {
     console.log(this.state);
     axios.post('http://localhost:4000/users/login',this.state)
       .then((res) => {
+        console.log(res.data)
           localStorage.setItem('userInfo',this.state.username)
+          // localStorage.setItem('userInfo',res.data._id)
           this.props.history.push('/')
       })
       .catch(err =>{

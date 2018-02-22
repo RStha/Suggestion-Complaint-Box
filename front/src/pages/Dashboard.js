@@ -12,6 +12,7 @@ class Dashboard extends Component {
 }
 
 signOut = () => {
+  // localStorage.setItem('username', "")
   localStorage.setItem('userInfo', "")
     this.props.history.push('/login')
 }

@@ -47,7 +47,8 @@ class Main extends Component {
         console.log('saved successfully')
         // a = [1,2,3]
         // b = [...a,4]  => [1,2,3,4]
-        var posts = [...this.state.defaultPosts,response.data];
+        // var posts = [...this.state.defaultPosts,response.data];
+        var posts = [response.data, ...this.state.defaultPosts];
         if(this.state.temp){
         this.setState({
           defaultPosts:posts
@@ -61,12 +62,6 @@ class Main extends Component {
           });
         }
         this.setState({complaintText: '', department: ''});
-        
-        // axios.get('http://localhost:4000/complaints')
-        // .then((posts) => {
-        //   this.setState({defaultPosts: posts, filteredPost: posts})
-        // })
-        // .catch(e => console.log("error", e))
     })
     .catch(err =>{
       console.log(err.message);
@@ -90,6 +85,27 @@ filterByDepartment = (dept) => {
       this.setState({filteredPost : filteredPost})
       console.log('Filtered Post: ', filteredPost);
     } 
+  }
+
+  deletePost = (id) => {
+    console.log('id', id)
+    axios.delete('http://localhost:4000/complaints/' + id)
+    .then(res => {
+      console.log(res)
+      var posts = res.data
+      if(this.state.temp){
+        this.setState({
+          defaultPosts:posts
+        },()=>{
+            this.filterByDepartment(this.state.temp)
+        });
+        } else {
+          this.setState({
+            defaultPosts:posts,
+            filteredPost:posts
+          });
+        }
+    })
   }
 
     render() {
@@ -128,15 +144,14 @@ filterByDepartment = (dept) => {
             </form>
             <br/>
             <hr/>
-            <br/>
-            <h3>Complaints </h3>
-            <br/>
-            <div className="container">
-                {this.state.filteredPost.map((post, index) => {
-                    return <BsFeeds comment = {post.complaint} username = {post.userName} key={index}/>
+
+            <div className="my-3 p-3 bg-white rounded box-shadow">
+              <h3 className="border-bottom border-gray pb-2 mb-0">Complaints</h3>
+              {this.state.filteredPost.map((post, index) => {
+                    return <BsFeeds comment = {post.complaint} username = {post.userName} key = {index} id = {post._id} deletePost= {this.deletePost}/>
                 })}
-                </div>
-                </div>
+            </div>
+            </div>
             </div>
             </div>)
     }
