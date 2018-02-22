@@ -7,8 +7,10 @@ const BsNav = (props) => {
     props.signOut()
   }
 
+  const username = localStorage.getItem("userInfo")
   return (
 <nav className="navbar navbar-dark bg-dark flex-md-nowrap p-0 fixed-top">
+    <a className="navbar-item text-nowarp col-sm-3 col-md-2 mr-0">{username}</a>
     <a className="navbar-brand col-sm-3 col-md-2 mr-0" href="/">{props.title}</a>
     <ul className="navbar-nav px-3">
       <li className="nav-item text-nowrap">

@@ -1,4 +1,6 @@
 import React from 'react';
+import avatar from './../avatars_ruji.png';
+import placeholder from './../placeholder.png';
 
 const BsFeeds = (props) => {
 
@@ -14,7 +16,7 @@ if (username === props.username) {
 
 return (
   <div className="media text-muted pt-3">
-  <img src="" alt="" className="mr-2 rounded"/>
+  <img src={placeholder} alt="" className="mr-2 rounded"  width="32" height="32"/>
   <div className="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
     <div className="d-flex justify-content-between align-items-center w-100">
       <strong className=" d-block text-gray-dark">{props.username}</strong>
